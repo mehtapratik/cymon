@@ -4,6 +4,13 @@
    var startStopButton = d.querySelector('#startStopBtn');
    var controlButtons = d.querySelectorAll('button[data-color]');
    var gamePad = d.querySelector('.cymon');
+   var keyCodes = {
+      N: 78,
+      E: 69,
+      S: 83,
+      W: 87,
+      Zero: 48
+   };
 
    function resetControlButtons() {
       controlButtons.forEach(function turnOffButton(e) {
@@ -76,6 +83,26 @@
    startStopButton.addEventListener('click', startOrStopGame);
    controlButtons.forEach(function (e) {
       e.addEventListener('click', sendInput);
+   });
+
+   window.addEventListener('keydown', function handleKeyboardShortcuts(e) {
+      switch (e.keyCode) {
+         case keyCodes.N:
+            controlButtons[0].click();
+            break;
+         case keyCodes.E:
+            controlButtons[1].click();
+            break;
+         case keyCodes.S:
+            controlButtons[2].click();
+            break;
+         case keyCodes.W:
+            controlButtons[3].click();
+            break;
+         case keyCodes.Zero:
+            startStopButton.click();
+            break;
+      }
    });
 
 })(window, document);

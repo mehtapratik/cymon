@@ -1,7 +1,5 @@
 @import "foundation";
 
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400&display=swap");
-
 @keyframes gameOver {
   0%,
   50%,
@@ -22,26 +20,13 @@ body {
    display: flex;
    place-content: center;
    align-items: center;
-   font-family: "Ubuntu";
+   font-family: "menlo", "consolas", monospace;
    color: #fff;
 }
 
 :focus {
    outline: 1px dashed #fff;
    outline-offset: -5px;
-}
-
-h1 {
-   text-align: center;
-   position: fixed;
-   top: 3vh;
-   left: 50%;
-   transform: translatex(-50%);
-   font-size: 30px;
-   letter-spacing: 3px;
-   text-transform: uppercase;
-   font-family: inherit;
-   font-weight: 300;
 }
 
 .cymon {
@@ -67,7 +52,6 @@ h1 {
 .cymon--game-over {
    animation: gameOver 1.5s both;
    .cymon__btn--start {
-      color: firebrick;
       box-shadow: 0 2px 2px #151824, 0 -2px 2px #4c4f62;
       text-shadow: 0 0 10px rgba(firebrick, 0.75);
    }
@@ -75,19 +59,23 @@ h1 {
 
 .cymon--active {
    .cymon__btn--red {
-      box-shadow: -2px -2px 1px #f67492;
+      box-shadow: -2px -2px 1px currentColor;
+      color: #f67492
    }
 
    .cymon__btn--green {
-      box-shadow: 2px -2px 1px #71efb4;
+      box-shadow: 2px -2px 1px currentColor;
+      color: #71efb4
    }
 
    .cymon__btn--blue {
-      box-shadow: 2px 2px 1px #6a55f2;
+      box-shadow: 2px 2px 1px currentColor;
+      color: #6a55f2;
    }
 
    .cymon__btn--yellow {
-      box-shadow: -2px 2px 1px #ad7703;
+      box-shadow: -2px 2px 1px currentColor;
+      color: #ad7703;
    }
 
    .cymon__btn--start {
@@ -121,8 +109,18 @@ h1 {
    cursor: pointer;
    transition: transform 400ms;
    font: inherit;
+   font-size: 1rem;
+   color: #fff;
    // this prevents zoom behavior on double tap of buttons
    touch-action: manipulation;
+   @media (min-width: 50rem) {
+      font-size: 1.5rem;
+   }
+}
+
+.cymon__btn > span {
+   transform: rotate(-45deg);
+   display: block;
 }
 
 
@@ -137,21 +135,23 @@ h1 {
    color: rgba(255, 255, 255, 0.5);
    border-radius: 25%;
    background: linear-gradient(180deg, #343645, #1f2231);
-   box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+   box-shadow: 0 0 20px rgba(#fff, 0.4);
    line-height: 1;
    display: flex;
    flex-flow: column;
    place-content: center;
    align-items: center;
-   font-size: 18px;
    text-transform: uppercase;
    font-weight: 300;
-   color: magenta;
-   text-shadow: 0 0 10px rgba(magenta, 0.75);
+   color: #fff;
 }
 
 .cymon__btn--red {
    border-top-left-radius: 100%;
+}
+
+.cymon__btn--on {
+   color: #000 !important;
 }
 
 .cymon__btn--red.cymon__btn--on {
