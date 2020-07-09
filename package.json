@@ -4,8 +4,7 @@
    "description": "",
    "scripts": {
       "sass": "sass ./assets/scss/app.scss:./assets/css/app.css --style=compressed",
-      "watch": "npm run sass -- --watch",
-      "start": "npm run watch"
+      "watch": "npm run sass -- --watch"
    },
    "author": "Pratik Mehta",
    "license": "MIT",

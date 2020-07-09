@@ -121,6 +121,8 @@ h1 {
    cursor: pointer;
    transition: transform 400ms;
    font: inherit;
+   // this prevents zoom behavior on double tap of buttons
+   touch-action: manipulation;
 }
 
 
