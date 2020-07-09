@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+</head>
+
+<body>
+   <main>
+      <h1>Cymon</h1>
+      <section class="cymon">
+         <button data-color="red" class="cymon__btn cymon__btn--red">
+            <span class="sr-only">alpha</span>
+         </button>
+         <button data-color="green" class="cymon__btn cymon__btn--green">
+            <span class="sr-only">beta</span>
+         </button>
+         <button data-color="blue" class="cymon__btn cymon__btn--blue">
+            <span class="sr-only">gamma</span>
+         </button>
+         <button data-color="yellow" class="cymon__btn cymon__btn--yellow">
+            <span class="sr-only">omega</span>
+         </button>
+         <button id="startStopBtn" class="cymon__btn cymon__btn--reset">
+            <span class="cymon__start">Start</span>
+         </button>
+      </section>
+   </main>
+
+   <script>
+      document.querySelectorAll('button[data-color]').forEach(function (e) {
+         e.addEventListener('click', function (e) {
+            var sounds = {
+               red: new Audio('assets/sounds/glass_002.mp3'),
+               green: new Audio('assets/sounds/drop_002.mp3'),
+               blue: new Audio('assets/sounds/click_005.mp3'),
+               yellow: new Audio('assets/sounds/back_003.mp3'),
+               lost: new Audio('assets/sounds/tom.mp3')
+            };
+            // sounds.green.preload = 'auto';
+            var audio = new Audio(sounds[this.getAttribute('data-color')].src);
+            //alert(audio.src);
+            audio.play();
+
+            setTimeout(function () {
+               audio = null;
+            }, 300);
+         });
+      });
+   </script>
+</body>
+
+</html>

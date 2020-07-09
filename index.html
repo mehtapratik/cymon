@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <title>Cymon - Game to test and improve your memory</title>
+
+   <link rel="stylesheet" href="/assets/css/app.css">
+</head>
+
+<body>
+   <main>
+      <h1>Cymon</h1>
+      <section class="cymon">
+         <button data-color="red" class="cymon__btn cymon__btn--red">
+            <span class="sr-only">Red</span>
+         </button>
+         <button data-color="green" class="cymon__btn cymon__btn--green">
+            <span class="sr-only">Green</span>
+         </button>
+         <button data-color="blue" class="cymon__btn cymon__btn--blue">
+            <span class="sr-only">Blue</span>
+         </button>
+         <button data-color="yellow" class="cymon__btn cymon__btn--yellow">
+            <span class="sr-only">Yellow</span>
+         </button>
+         <button id="startStopBtn" class="cymon__btn cymon__btn--start">
+            Start
+         </button>
+      </section>
+      <!-- <audio data-color="red" src="assets/sounds/glass_002.mp3" preload></audio>
+      <audio data-color="green" src="assets/sounds/drop_002.mp3" preload></audio>
+      <audio data-color="blue" src="assets/sounds/click_005.mp3" preload></audio>
+      <audio data-color="yellow" src="assets/sounds/back_003.mp3" preload></audio>
+      <audio id="gameLostSound" src="assets/sounds/tom.mp3" preload></audio> -->
+   </main>
+
+   <script src="//cdnjs.cloudflare.com/ajax/libs/ramda/0.25.0/ramda.min.js"></script>
+   <script src="assets/js/cymon-v2.js"></script>
+   <script src="assets/js/app-v2.js"></script>
+</body>
+
+</html>
