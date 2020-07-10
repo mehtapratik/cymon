@@ -3,52 +3,75 @@
 
 <head>
    <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <style>
+      body {
+         touch-action: manipulation;
+      }
+
+   </style>
 </head>
 
 <body>
    <main>
       <h1>Cymon</h1>
       <section class="cymon">
-         <button data-color="red" class="cymon__btn cymon__btn--red">
+         <button data-color="red" class="cymon__btn cymon__btn--red" onclick="beep(100, 200, 100);">
             <span class="sr-only">alpha</span>
          </button>
-         <button data-color="green" class="cymon__btn cymon__btn--green">
+         <button data-color="green" class="cymon__btn cymon__btn--green" onclick="beep(300, 400, 100);">
             <span class="sr-only">beta</span>
          </button>
-         <button data-color="blue" class="cymon__btn cymon__btn--blue">
+         <button data-color="blue" class="cymon__btn cymon__btn--blue" onclick="beep(200, 600, 100);">
             <span class="sr-only">gamma</span>
          </button>
-         <button data-color="yellow" class="cymon__btn cymon__btn--yellow">
+         <button data-color="yellow" class="cymon__btn cymon__btn--yellow" onclick="beep(400, 800, 100);">
             <span class="sr-only">omega</span>
          </button>
-         <button id="startStopBtn" class="cymon__btn cymon__btn--reset">
+         <button id="startStopBtn" class="cymon__btn cymon__btn--reset" onclick="beep(500, 900, 1000);">
             <span class="cymon__start">Start</span>
          </button>
       </section>
    </main>
 
    <script>
-      document.querySelectorAll('button[data-color]').forEach(function (e) {
-         e.addEventListener('click', function (e) {
-            var sounds = {
-               red: new Audio('assets/sounds/glass_002.mp3'),
-               green: new Audio('assets/sounds/drop_002.mp3'),
-               blue: new Audio('assets/sounds/click_005.mp3'),
-               yellow: new Audio('assets/sounds/back_003.mp3'),
-               lost: new Audio('assets/sounds/tom.mp3')
-            };
-            // sounds.green.preload = 'auto';
-            var audio = new Audio(sounds[this.getAttribute('data-color')].src);
-            //alert(audio.src);
-            audio.play();
+      var AudioContext = window.AudioContext || window.webkitAudioContext;
 
-            setTimeout(function () {
-               audio = null;
-            }, 300);
-         });
-      });
+      a = new AudioContext() // browsers limit the number of concurrent audio contexts, so you better re-use'em
+
+      function beep(vol, freq, duration) {
+         v = a.createOscillator()
+         u = a.createGain()
+         v.connect(u)
+         v.frequency.value = freq
+         v.type = "square"
+         u.connect(a.destination)
+         u.gain.value = vol * 0.01
+         v.start(a.currentTime)
+         v.stop(a.currentTime + duration * 0.001)
+      }
+
+      // document.querySelectorAll('button[data-color]').forEach(function (e) {
+      //    e.addEventListener('click', function (e) {
+      //       // var sounds = {
+      //       //    red: new Audio('assets/sounds/north.mp3'),
+      //       //    green: new Audio('assets/sounds/east.mp3'),
+      //       //    blue: new Audio('assets/sounds/south.mp3'),
+      //       //    yellow: new Audio('assets/sounds/west.mp3')
+      //       // };
+      //       // // sounds.green.preload = 'auto';
+      //       // var audio = sounds[this.getAttribute('data-color')];
+      //       //alert(audio.src);
+      //       // audio.currentTime = 0;
+      //       // audio.play();
+      //       navigator.vibrate(200);
+
+      //       // setTimeout(function () {
+      //       //    audio.pause();
+      //       // }, 500);
+      //    });
+      // });
    </script>
 </body>
 

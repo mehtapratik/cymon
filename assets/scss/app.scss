@@ -58,6 +58,12 @@ body {
 }
 
 .cymon--active {
+   .cymon__btn--start {
+      box-shadow: 0 2px 2px #151824, 0 -2px 2px #4c4f62;
+   }
+}
+
+.cymon--mode-input {
    .cymon__btn--red {
       box-shadow: -2px -2px 1px currentColor;
       color: #f67492
@@ -82,9 +88,9 @@ body {
       box-shadow: 0 2px 2px #151824, 0 -2px 2px #4c4f62;
    }
 
-
    .cymon__btn:hover {
       transform: scale(1.05);
+
       &.cymon__btn--start {
          transform: translate(-50%, -50%) rotate(-45deg) scale(1.05);
       }
@@ -93,9 +99,9 @@ body {
    .cymon__btn:active {
       transform: scale(0.95);
 
-      &.cymon__btn--start {
+      &.cymon__btn--hover {
          transform: translate(-50%, -50%) rotate(-45deg) scale(0.95);
-      }
+      }      
    }
 }
 
@@ -145,6 +151,15 @@ body {
    font-weight: 300;
    color: #fff;
 }
+
+.cymon__btn--start:hover {
+   transform: translate(-50%, -50%) rotate(-45deg) scale(1.05);
+}
+
+.cymon__btn--hover:active {
+   transform: translate(-50%, -50%) rotate(-45deg) scale(0.95);
+}
+
 
 .cymon__btn--red {
    border-top-left-radius: 100%;

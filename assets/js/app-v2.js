@@ -4,6 +4,15 @@
    var startStopButton = d.querySelector('#startStopBtn');
    var controlButtons = d.querySelectorAll('button[data-color]');
    var gamePad = d.querySelector('.cymon');
+   var audioContext = new (window.AudioContext || window.webkitAudioContext)();
+   var sounds = {
+      red: [100, 200, 100],
+      green: [300, 400, 100],
+      blue: [200, 600, 100],
+      yellow: [400, 800, 100],
+      lost: [500, 50, 1000]
+   };
+
    var keyCodes = {
       N: 78,
       E: 69,
@@ -11,6 +20,19 @@
       W: 87,
       Zero: 48
    };
+
+   function beep(vol, freq, duration) {
+      v = audioContext.createOscillator()
+      u = audioContext.createGain()
+      v.connect(u)
+      v.frequency.value = freq
+      v.type = "square"
+      u.connect(audioContext.destination)
+      u.gain.value = vol * 0.01
+      v.start(audioContext.currentTime)
+      v.stop(audioContext.currentTime + duration * 0.001)
+   }
+
 
    function resetControlButtons() {
       controlButtons.forEach(function turnOffButton(e) {
@@ -20,11 +42,11 @@
 
    function glowAndPlay(choice) {
       var choiceBtn = document.querySelector(`button[data-color="${choice}"]`);
-
+      var sound = sounds[choice];
 
       resetControlButtons();
       choiceBtn.classList.add('cymon__btn--on');
-
+      beep(...sound);
       setTimeout(function () {
          resetControlButtons();
       }, 300);
@@ -32,10 +54,14 @@
 
    function showOutput(choice, position, length, done) {
       glowAndPlay(choice);
+      if (done) {
+         gamePad.classList.add('cymon--mode-input');
+      }
    }
 
    function sendInput(e) {
-      if (game.isActive()) {
+      console.log(game.getMode());
+      if (game.getMode() == 'in') {
          var choice = this.getAttribute('data-color');
          glowAndPlay(choice);
          game.sendUserInput(choice);
@@ -43,16 +69,20 @@
    }
 
    function processInputResponse(valid, received, actual, position, length) {
-
+      if (position == length) {
+         gamePad.classList.remove('cymon--mode-input');
+      }
    }
 
    function endGame(reason) {
       gamePad.classList.remove('cymon--active');
+      gamePad.classList.remove('cymon--mode-input');
       startStopButton.innerHTML = 'Start';
 
       if (['TIMED_OUT', 'LOST'].includes(reason)) {
          startStopButton.innerHTML = 'Game Over';
          resetControlButtons();
+         beep(...sounds.lost);
          gamePad.classList.add('cymon--game-over');
          setTimeout(function () {
             startStopButton.innerHTML = 'Start';
@@ -66,15 +96,15 @@
          return;
       }
 
-      if (game.isActive()) {
-         game.stop();
-         gamePad.classList.remove('cymon--active');
-         this.innerHTML = 'Start';
-      }
-      else {
+      if (game.getMode() == 'off') {
          game.start();
          gamePad.classList.add('cymon--active');
          this.innerHTML = 'Stop';
+      }
+      else {
+         game.stop();
+         gamePad.classList.remove('cymon--active');
+         this.innerHTML = 'Start';
       }
    }
 

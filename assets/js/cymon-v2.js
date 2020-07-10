@@ -33,6 +33,25 @@ function cymon(choices, onSystemOuptut, onUserInput, onGameOver) {
       onGameOver(reason);
    }
 
+   function switchToInputMode(delay) {
+      setTimeout(function switchingToInputMode() {
+         mode = 'in';
+         seriesIndex = 0;
+         resetUserInputTimer();
+      }, delay);
+   }
+
+   function switchToOutputMode(delay) {
+      // Added delay to prevent last user inputs and first system 
+      // output overlapping each other
+      setTimeout(function switchingToOutputMode() {
+         mode = 'out';
+         seriesIndex = 0;
+         stopUserInputTimer();
+         sendBlips();
+      }, delay);
+   }
+
    function resetUserInputTimer(after) {
       if (mode != 'off') {
          stopUserInputTimer();
@@ -81,10 +100,7 @@ function cymon(choices, onSystemOuptut, onUserInput, onGameOver) {
       setTimeout(sendSystemOutput, delay, choice, position, seriesLength, done);
 
       if (done) {
-         mode = 'in';
-         seriesIndex = 0;
-         setTimeout(resetUserInputTimer, (OUTPUT_DELAY * seriesLength), (OUTPUT_DELAY * seriesLength));
-         return seriesLength;
+         switchToInputMode(OUTPUT_DELAY * seriesLength);
       }
       else {
          seriesIndex += 1;
@@ -109,12 +125,7 @@ function cymon(choices, onSystemOuptut, onUserInput, onGameOver) {
          if (seriesIndex >= series.length) {
             // entire series is valid. 
             // switch to output mode to send new series
-            mode = 'out';
-            seriesIndex = 0;
-            stopUserInputTimer();
-            // Delay added to present last user inputs and first system output
-            // overlapping each other
-            setTimeout(sendBlips, (OUTPUT_DELAY * 2));
+            switchToOutputMode(OUTPUT_DELAY * 2);
          } else {
             // valid but remaining series to be validated
             resetUserInputTimer();
@@ -131,8 +142,8 @@ function cymon(choices, onSystemOuptut, onUserInput, onGameOver) {
    }
 
    return {
-      isActive: function () {
-         return mode != 'off';
+      getMode: function () {
+         return mode;
       },
       start: function startGame() {
          mode = 'out';
