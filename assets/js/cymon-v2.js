@@ -33,18 +33,26 @@ function cymon(choices, onSystemOuptut, onUserInput, onGameOver) {
       onGameOver(reason);
    }
 
-   function switchToInputMode(delay) {
-      setTimeout(function switchingToInputMode() {
+   function startInputMode(delay) {
+      setTimeout(function startingInputMode() {
+         //don't proceed if user turned-off the game in-between
+         if (mode == 'off') {
+            return;
+         }
          mode = 'in';
          seriesIndex = 0;
          resetUserInputTimer();
       }, delay);
    }
 
-   function switchToOutputMode(delay) {
+   function startOutputMode(delay) {
       // Added delay to prevent last user inputs and first system 
       // output overlapping each other
-      setTimeout(function switchingToOutputMode() {
+      setTimeout(function startingOutputMode() {
+         //don't proceed if user turned-off the game in-between
+         if (mode == 'off') {
+            return;
+         }
          mode = 'out';
          seriesIndex = 0;
          stopUserInputTimer();
@@ -100,7 +108,7 @@ function cymon(choices, onSystemOuptut, onUserInput, onGameOver) {
       setTimeout(sendSystemOutput, delay, choice, position, seriesLength, done);
 
       if (done) {
-         switchToInputMode(OUTPUT_DELAY * seriesLength);
+         startInputMode(OUTPUT_DELAY * seriesLength);
       }
       else {
          seriesIndex += 1;
@@ -125,7 +133,7 @@ function cymon(choices, onSystemOuptut, onUserInput, onGameOver) {
          if (seriesIndex >= series.length) {
             // entire series is valid. 
             // switch to output mode to send new series
-            switchToOutputMode(OUTPUT_DELAY * 2);
+            startOutputMode(OUTPUT_DELAY * 2);
          } else {
             // valid but remaining series to be validated
             resetUserInputTimer();
