@@ -2,13 +2,19 @@
 
 @keyframes gameOver {
   0%,
-  50%,
+  20%,
+  40%,
+  60%,
+  80%,
   100% {
      box-shadow: none;
     //opacity: 1;
   }
-  25%,
-  75% {
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
      box-shadow: 0 0 20px firebrick;
     //opacity: 0;
   }
